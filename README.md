@@ -1,4 +1,4 @@
-# SSL Configuration Guidance Manual for phpMyAdmin on Laragon
+# SSL Configuration Guidance Manual for phpMyAdmin on Laragon and XAMPP
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/sisovin/guidance-manual)
@@ -22,12 +22,13 @@
 
 ## 🌟 Overview
 
-This repository provides comprehensive guidance for configuring SSL/TLS encryption in Laragon-based development environments. The manual covers both HTTPS for web interface security and MySQL SSL for database connection encryption, addressing common configuration challenges and providing practical solutions for local development environments.
+This repository provides comprehensive guidance for configuring SSL/TLS encryption in local development environments using Laragon and XAMPP. The manuals cover both HTTPS for web interface security and MySQL SSL for database connection encryption, addressing common configuration challenges and providing practical solutions for local development environments.
 
 ### 🎯 Key Objectives
 
 - **Secure Web Access**: Enable HTTPS for phpMyAdmin web interface
 - **Encrypted Database Connections**: Configure MySQL SSL/TLS
+- **Multi-Platform Support**: Guides for both Laragon and XAMPP environments
 - **Development-Friendly**: Self-signed certificates for local development
 - **Production-Ready**: Guidance for production deployments
 - **Comprehensive Coverage**: From certificate generation to troubleshooting
@@ -41,20 +42,21 @@ This repository provides comprehensive guidance for configuring SSL/TLS encrypti
 - 📚 **Troubleshooting Guide**: Common issues and solutions
 - 🔄 **Maintenance Procedures**: Certificate renewal and backup strategies
 - 🛡️ **Security Best Practices**: Development and production considerations
+- 🌐 **Multi-Environment**: Support for Laragon and XAMPP
 
 ## 📋 Prerequisites
 
 ### System Requirements
 - **Operating System**: Windows 10/11
-- **Laragon**: Latest version recommended
-- **phpMyAdmin**: Version 6.x
-- **MySQL**: Version 9.1+
+- **Development Environment**: Laragon or XAMPP
+- **phpMyAdmin**: Version 6.x (Laragon) or included with XAMPP
+- **MySQL**: Version 9.1+ (Laragon) or included with XAMPP
 - **PowerShell**: Version 5.1 or higher (with execution policy set)
-- **OpenSSL**: Available in PATH (included with Laragon)
+- **OpenSSL**: Available in PATH (included with both environments)
 
 ### Required Permissions
 - Administrative access for certificate generation
-- Write permissions to Laragon directories
+- Write permissions to environment directories
 - MySQL root access for configuration
 
 ## 🚀 Quick Start
@@ -65,18 +67,24 @@ This repository provides comprehensive guidance for configuring SSL/TLS encrypti
    cd guidance-manual
    ```
 
-2. **Review the main documentation**
-   - Open [Configure SSL for phpMyAdmin on Laragon.md](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md)
-   - Follow the step-by-step instructions
+2. **Choose your environment**
+   - For **Laragon**: Open [Configure SSL for phpMyAdmin on Laragon.md](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md)
+   - For **XAMPP**: Open [Configure the SSL for the phpMayAdmin Vs MySQL on xampp.md](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md)
 
 3. **Execute the SSL configuration**
    ```powershell
-   # Generate certificates
+   # For Laragon
    .\Generate-LocalhostCert.ps1
    .\Generate-MySQL-SSL-Certs.ps1
 
+   # For XAMPP
+   cd D:\xampp\xampp\apache
+   makecert.bat
+   .\crt\Generate-MySQL-SSL-Certs.ps1
+
    # Restart services
-   laragon restart all
+   # Laragon: laragon restart all
+   # XAMPP: Restart via Control Panel
    ```
 
 4. **Verify the setup**
@@ -89,14 +97,15 @@ This repository provides comprehensive guidance for configuring SSL/TLS encrypti
 
 ### 📖 Main Documents
 
-| Document | Description | Status |
-|----------|-------------|--------|
-| [Configure SSL for phpMyAdmin on Laragon.md](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md) | Complete SSL configuration guide | ✅ Complete |
-| [README.md](README.md) | Project overview and quick reference | ✅ Complete |
+| Document | Environment | Description | Status |
+|----------|-------------|-------------|--------|
+| [Configure SSL for phpMyAdmin on Laragon.md](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md) | Laragon | Complete SSL configuration guide for Laragon | ✅ Complete |
+| [Configure the SSL for the phpMayAdmin Vs MySQL on xampp.md](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md) | XAMPP | Step-by-step SSL setup for XAMPP | ✅ Complete |
+| [README.md](README.md) | Both | Project overview and quick reference | ✅ Complete |
 
 ### 📑 Document Sections
 
-#### SSL Configuration Guide
+#### Laragon Configuration Guide
 - **Document Control**: Version history and metadata
 - **Executive Summary**: High-level overview
 - **Architecture Overview**: System design and components
@@ -109,13 +118,24 @@ This repository provides comprehensive guidance for configuring SSL/TLS encrypti
 - **Security Best Practices**: Development and production
 - **Appendices**: Quick references and resources
 
+#### XAMPP Configuration Guide
+- **Prerequisites**: System requirements
+- **Apache SSL Setup**: Certificate generation and configuration
+- **MySQL SSL Setup**: Certificate creation and server configuration
+- **phpMyAdmin Configuration**: SSL connection settings
+- **Certificate Import**: System store integration
+- **Testing and Verification**: Service restart and validation
+- **Troubleshooting**: Common issues and solutions
+- **Security Notes**: Best practices and considerations
+
 ## 🏗️ Project Structure
 
 ```
 guidance-manual/
-├── Configure SSL for phpMyAdmin on Laragon.md  # Main documentation
-├── README.md                                    # Project overview
-└── scripts/                                    # Automation scripts (future)
+├── Configure SSL for phpMyAdmin on Laragon.md     # Laragon SSL guide
+├── Configure the SSL for the phpMayAdmin Vs MySQL on xampp.md  # XAMPP SSL guide
+├── README.md                                       # Project overview
+└── scripts/                                       # Automation scripts (future)
     ├── Generate-LocalhostCert.ps1
     ├── Generate-MySQL-SSL-Certs.ps1
     ├── Test-MySQL-SSL.ps1
@@ -127,7 +147,7 @@ guidance-manual/
 ### Option 1: Direct Download
 1. Download the repository as ZIP
 2. Extract to your desired location
-3. Open the documentation files
+3. Open the appropriate documentation file for your environment
 
 ### Option 2: Git Clone
 ```bash
@@ -135,21 +155,28 @@ git clone https://github.com/sisovin/guidance-manual.git
 cd guidance-manual
 ```
 
-### Option 3: Laragon Integration
-1. Place the documentation in `D:\laragon\www\guidance-manual\`
-2. Access via `http://guidance-manual/` (if configured)
+### Option 3: Environment Integration
+- **Laragon**: Place in `D:\laragon\www\guidance-manual\` and access via browser
+- **XAMPP**: Place in `D:\xampp\htdocs\guidance-manual\` and access via browser
 
 ## 💡 Usage
 
-### For System Administrators
+### For Laragon Users
 1. Review the [pre-configuration checklist](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#2-pre-configuration-checklist)
 2. Follow the [HTTPS configuration](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#3-https-configuration-for-web-interface) steps
 3. Configure [MySQL SSL](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#4-mysql-ssl-configuration)
 4. Set up [configuration storage](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#5-configuration-storage-setup)
 
+### For XAMPP Users
+1. Check the [prerequisites](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#prerequisites)
+2. Generate [Apache certificates](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#step-1-generate-ssl-certificates-for-apache-localhost)
+3. Configure [Apache SSL](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#step-2-configure-apache-for-ssl)
+4. Set up [MySQL SSL](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#step-3-generate-mysql-ssl-certificates)
+5. Update [phpMyAdmin config](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#step-5-configure-phpmyadmin-for-ssl)
+
 ### For Developers
 1. Use the provided PowerShell scripts for certificate generation
-2. Follow the step-by-step configuration guide
+2. Follow the step-by-step configuration guide for your environment
 3. Test connections using the diagnostic tools
 4. Refer to troubleshooting section for common issues
 
@@ -187,12 +214,13 @@ We welcome contributions to improve this documentation!
 
 ### Common Issues
 
-| Issue | Solution | Reference |
-|-------|----------|-----------|
-| Certificate generation fails | Check administrative privileges | [Section 3.1](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#311-automated-certificate-generation-script) |
-| MySQL SSL connection errors | Verify certificate paths and permissions | [Section 4.3](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#43-verify-mysql-ssl-configuration) |
-| Mixed content warnings | Ensure ForceSSL is enabled | [Section 3.3](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#33-configure-phpmyadmin-for-https) |
-| Memory exhaustion | Increase PHP memory limits | [Section 6.1](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#61-common-issues-and-solutions) |
+| Issue | Environment | Solution | Reference |
+|-------|-------------|----------|-----------|
+| Certificate generation fails | Both | Check administrative privileges | Laragon: [Section 3.1](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#311-automated-certificate-generation-script) |
+| MySQL SSL connection errors | Both | Verify certificate paths and permissions | Laragon: [Section 4.3](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#43-verify-mysql-ssl-configuration) |
+| Mixed content warnings | Both | Ensure ForceSSL is enabled | Laragon: [Section 3.3](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#33-configure-phpmyadmin-for-https) |
+| Memory exhaustion | Laragon | Increase PHP memory limits | Laragon: [Section 6.1](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#61-common-issues-and-solutions) |
+| 500 Internal Server Error | XAMPP | Check Apache logs; remove FCGI proxy | XAMPP: [Troubleshooting](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md#troubleshooting) |
 
 ### Diagnostic Tools
 - `Test-MySQL-SSL.ps1`: Test SSL connections
@@ -201,7 +229,7 @@ We welcome contributions to improve this documentation!
 - MySQL command line: Verify SSL status
 
 ### Getting Help
-- 📖 Check the [troubleshooting guide](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md#6-troubleshooting-guide)
+- 📖 Check the appropriate troubleshooting guide
 - 🔍 Search existing issues on GitHub
 - 💬 Open a new issue with detailed information
 - 📧 Contact maintainers for urgent issues
@@ -242,6 +270,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### Technologies & Tools
 - **Laragon**: Excellent local development environment
+- **XAMPP**: Popular Apache distribution for Windows
 - **phpMyAdmin**: Powerful MySQL administration tool
 - **MySQL**: Robust database server with SSL support
 - **OpenSSL**: Industry-standard cryptography library
@@ -252,10 +281,12 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [MySQL SSL Configuration Guide](https://dev.mysql.com/doc/refman/9.1/en/using-encrypted-connections.html)
 - [OpenSSL Documentation](https://www.openssl.org/docs/)
 - [Laragon Community](https://forum.laragon.org/)
+- [XAMPP Documentation](https://www.apachefriends.org/)
 - Various security best practices from OWASP and NIST
 
 ### Special Thanks
 - The developers of Laragon for creating such a user-friendly development environment
+- The Apache Friends team for XAMPP
 - The phpMyAdmin team for their comprehensive database management tool
 - The MySQL team for robust SSL/TLS implementation
 - All contributors who help improve this documentation
@@ -266,7 +297,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - 📧 **Email**: [your-email@example.com]
 - 🐛 **Issues**: [GitHub Issues](https://github.com/sisovin/guidance-manual/issues)
-- 📖 **Documentation**: [Main Guide](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md)
+- 📖 **Documentation**: [Laragon Guide](Configure%20SSL%20for%20phpMyAdmin%20on%20Laragon.md) | [XAMPP Guide](Configure%20the%20SSL%20for%20the%20phpMayAdmin%20Vs%20MySQL%20on%20xampp.md)
 - 💬 **Discussions**: [GitHub Discussions](https://github.com/sisovin/guidance-manual/discussions)
 
 ## 🔄 Version History
